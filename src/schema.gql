@@ -1,0 +1,433 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AuthPayload {
+  accessToken: String!
+  expiresIn: Int!
+  refreshToken: String!
+  user: User!
+}
+
+type Comment {
+  author: User!
+  content: String!
+  createdAt: DateTime!
+  id: ID!
+  isEdited: Boolean!
+  parent: Comment
+  post: Post!
+  replies: [Comment!]!
+  updatedAt: DateTime!
+}
+
+input CreateCommentInput {
+  """Comment content"""
+  content: String!
+
+  """ID of the parent comment (for nested replies)"""
+  parentId: String
+
+  """ID of the post being commented on"""
+  postId: String!
+}
+
+input CreatePostInput {
+  """Post content"""
+  content: String!
+
+  """Post URL slug (lowercase, alphanumeric with hyphens)"""
+  slug: String!
+
+  """Array of tag IDs to associate with the post"""
+  tagIds: [String!]
+
+  """Post title"""
+  title: String!
+}
+
+input CreateProfileInput {
+  """Avatar URL (must be HTTPS)"""
+  avatarUrl: String
+
+  """User biography (max 1000 characters)"""
+  bio: String
+
+  """Birth date (ISO 8601 format: YYYY-MM-DD)"""
+  birthDate: String
+
+  """User location (max 100 characters)"""
+  location: String
+
+  """Personal website URL"""
+  website: String
+}
+
+input CreateTagInput {
+  """Tag description (max 500 characters)"""
+  description: String
+
+  """Tag name (1-50 characters)"""
+  name: String!
+
+  """Tag slug (lowercase, alphanumeric with hyphens)"""
+  slug: String!
+}
+
+input CreateUserInput {
+  """User email address"""
+  email: String!
+
+  """User first name"""
+  firstName: String!
+
+  """User last name"""
+  lastName: String!
+
+  """User password"""
+  password: String!
+
+  """User roles (defaults to ["user"])"""
+  roles: [String!]
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+input LoginWithEmailInput {
+  email: String
+  mobile: String
+  password: String!
+}
+
+input LoginWithMobileInput {
+  email: String
+  mobile: String
+  password: String!
+}
+
+type Mutation {
+  """Create a new comment or reply"""
+  createComment(input: CreateCommentInput!): Comment!
+
+  """Create a new post"""
+  createPost(input: CreatePostInput!): Post!
+
+  """Create a profile for the current user"""
+  createProfile(input: CreateProfileInput!): Profile!
+
+  """Create a new tag"""
+  createTag(input: CreateTagInput!): Tag!
+
+  """Create a new user"""
+  createUser(input: CreateUserInput!): User!
+
+  """Delete a comment"""
+  deleteComment(id: ID!): Boolean!
+
+  """Delete a post"""
+  deletePost(id: ID!): Boolean!
+
+  """Delete a user"""
+  deleteUser(id: ID!): Boolean!
+
+  """Login with email and password"""
+  login(input: LoginInput!): AuthPayload!
+
+  """Login with email and password"""
+  loginWithEmail(input: LoginWithEmailInput!): AuthPayload!
+
+  """Login with mobile number and password"""
+  loginWithMobile(input: LoginWithMobileInput!): AuthPayload!
+
+  """Publish a post"""
+  publishPost(id: ID!): Post!
+
+  """Refresh access token using a valid refresh token"""
+  refreshToken(input: RefreshTokenInput!): AuthPayload!
+
+  """Register a new user account"""
+  register(input: RegisterInput!): AuthPayload!
+
+  """Register a new user with email and password"""
+  registerWithEmail(input: RegisterWithEmailInput!): AuthPayload!
+
+  """Register a new user with mobile number and password"""
+  registerWithMobile(input: RegisterWithMobileInput!): AuthPayload!
+
+  """Update an existing comment"""
+  updateComment(id: ID!, input: UpdateCommentInput!): Comment!
+
+  """Update an existing post"""
+  updatePost(id: ID!, input: UpdatePostInput!): Post!
+
+  """Update the current user's profile"""
+  updateProfile(input: UpdateProfileInput!): Profile!
+
+  """Update an existing tag"""
+  updateTag(id: ID!, input: UpdateTagInput!): Tag!
+
+  """Update an existing user"""
+  updateUser(id: ID!, input: UpdateUserInput!): User!
+}
+
+type PageInfo {
+  """Current page number (1-based)"""
+  currentPage: Int!
+
+  """Whether there is a next page"""
+  hasNextPage: Boolean!
+
+  """Whether there is a previous page"""
+  hasPreviousPage: Boolean!
+
+  """Number of items per page"""
+  pageSize: Int!
+
+  """Total number of items across all pages"""
+  totalItems: Int!
+
+  """Total number of pages"""
+  totalPages: Int!
+}
+
+type PaginatedPosts {
+  """Array of posts for current page"""
+  items: [Post!]!
+
+  """Pagination metadata"""
+  pageInfo: PageInfo!
+}
+
+type PaginatedTags {
+  """Array of tags for current page"""
+  items: [Tag!]!
+
+  """Pagination metadata"""
+  pageInfo: PageInfo!
+}
+
+type PaginatedUsers {
+  """Array of users for current page"""
+  items: [User!]!
+
+  """Pagination metadata"""
+  pageInfo: PageInfo!
+}
+
+input PaginationInput {
+  """Number of items per page (max 100)"""
+  limit: Int! = 10
+
+  """Page number (1-based)"""
+  page: Int! = 1
+
+  """Field to sort by"""
+  sortBy: String
+
+  """Sort order (ASC or DESC)"""
+  sortOrder: String = "ASC"
+}
+
+type Post {
+  author: User!
+  comments: [Comment!]!
+  content: String!
+  createdAt: DateTime!
+  id: ID!
+  publishedAt: DateTime
+  slug: String!
+  status: PostStatus!
+  tags: [Tag!]!
+  title: String!
+  updatedAt: DateTime!
+  viewCount: Float!
+}
+
+input PostFiltersInput {
+  """Filter by author ID"""
+  authorId: String
+
+  """Search text for full-text search"""
+  searchText: String
+
+  """Filter by post status"""
+  status: PostStatus
+}
+
+"""The status of a post"""
+enum PostStatus {
+  ARCHIVED
+  DRAFT
+  PUBLISHED
+}
+
+type Profile {
+  avatarUrl: String
+  bio: String
+  birthDate: DateTime
+  createdAt: DateTime!
+  id: ID!
+  location: String
+  updatedAt: DateTime!
+  user: User!
+  website: String
+}
+
+type Query {
+  """Get comments for a post with nested replies"""
+  comments(postId: ID!): [Comment!]!
+  health: String!
+
+  """Get current authenticated user"""
+  me: User!
+
+  """Get post by ID"""
+  post(id: ID!): Post!
+
+  """Get paginated list of posts"""
+  posts(filters: PostFiltersInput, pagination: PaginationInput): PaginatedPosts!
+
+  """Get a user profile by user ID"""
+  profile(userId: ID!): Profile!
+
+  """Search posts by text"""
+  searchPosts(pagination: PaginationInput, searchText: String!): PaginatedPosts!
+
+  """Get a tag by ID"""
+  tag(id: ID!): Tag!
+
+  """Get paginated list of tags"""
+  tags(pagination: PaginationInput): PaginatedTags!
+
+  """Get user by ID"""
+  user(id: ID!): User!
+
+  """Get paginated list of users"""
+  users(pagination: PaginationInput): PaginatedUsers!
+}
+
+input RefreshTokenInput {
+  refreshToken: String!
+}
+
+input RegisterInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
+}
+
+input RegisterWithEmailInput {
+  email: String
+  firstName: String!
+  lastName: String!
+  mobile: String
+  password: String!
+}
+
+input RegisterWithMobileInput {
+  email: String
+  firstName: String!
+  lastName: String!
+  mobile: String
+  password: String!
+}
+
+type Tag {
+  createdAt: DateTime!
+  description: String
+  id: ID!
+  name: String!
+  posts: [Post!]!
+  slug: String!
+}
+
+input UpdateCommentInput {
+  """Updated comment content"""
+  content: String!
+}
+
+input UpdatePostInput {
+  """Post content"""
+  content: String
+
+  """Post URL slug (lowercase, alphanumeric with hyphens)"""
+  slug: String
+
+  """Post status"""
+  status: PostStatus
+
+  """Array of tag IDs to associate with the post"""
+  tagIds: [String!]
+
+  """Post title"""
+  title: String
+}
+
+input UpdateProfileInput {
+  """Avatar URL (must be HTTPS)"""
+  avatarUrl: String
+
+  """User biography (max 1000 characters)"""
+  bio: String
+
+  """Birth date (ISO 8601 format: YYYY-MM-DD)"""
+  birthDate: String
+
+  """User location (max 100 characters)"""
+  location: String
+
+  """Personal website URL"""
+  website: String
+}
+
+input UpdateTagInput {
+  """Tag description (max 500 characters)"""
+  description: String
+
+  """Tag name (1-50 characters)"""
+  name: String
+
+  """Tag slug (lowercase, alphanumeric with hyphens)"""
+  slug: String
+}
+
+input UpdateUserInput {
+  """User email address"""
+  email: String
+
+  """User first name"""
+  firstName: String
+
+  """User active status"""
+  isActive: Boolean
+
+  """User last name"""
+  lastName: String
+
+  """User roles"""
+  roles: [String!]
+}
+
+type User {
+  comments: Comment
+  createdAt: DateTime!
+  email: String
+  firstName: String!
+  id: ID!
+  isActive: Boolean!
+  lastName: String!
+  mobile: String
+  posts: [Post!]
+  profile: Profile
+  roles: [String!]!
+  updatedAt: DateTime!
+}

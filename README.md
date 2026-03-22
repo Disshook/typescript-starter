@@ -1,98 +1,181 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# NestJS GraphQL API with TypeORM and MySQL
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A production-ready NestJS GraphQL API with TypeORM integration and MySQL database support.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Features
 
-## Description
+- 🚀 NestJS framework with TypeScript
+- 🔐 JWT authentication and authorization
+- 📊 GraphQL API with Apollo Server
+- 💾 TypeORM with MySQL database
+- ✅ Input validation with class-validator
+- 🔒 Security features (Helmet, CORS, Rate limiting)
+- 📝 Environment-based configuration
+- 🧪 Testing setup with Jest
+- 🎨 Code formatting with Prettier
+- 🔍 Linting with ESLint
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Prerequisites
 
-## Project setup
+- Node.js >= 20.0.0
+- npm >= 10.0.0
+- MySQL >= 8.0
+
+## Installation
 
 ```bash
-$ npm install
+# Install dependencies
+npm install
 ```
 
-## Compile and run the project
+## Configuration
+
+### Environment Variables
+
+Copy the appropriate environment file for your environment:
+
+**Development:**
+```bash
+cp .env.development .env
+```
+
+**Production:**
+```bash
+cp .env.production .env
+```
+
+### Required Environment Variables
+
+- `NODE_ENV` - Environment (development, production, test)
+- `PORT` - Application port (default: 3000)
+- `DB_HOST` - MySQL host
+- `DB_PORT` - MySQL port (default: 3306)
+- `DB_USERNAME` - MySQL username
+- `DB_PASSWORD` - MySQL password
+- `DB_DATABASE` - MySQL database name
+- `JWT_SECRET` - JWT secret key (min 32 characters)
+- `JWT_EXPIRES_IN` - JWT expiration time (default: 1h)
+- `JWT_REFRESH_SECRET` - JWT refresh token secret
+- `JWT_REFRESH_EXPIRES_IN` - JWT refresh token expiration (default: 7d)
+- `CORS_ORIGINS` - Comma-separated list of allowed origins
+- `RATE_LIMIT_TTL` - Rate limit time window in seconds (default: 900)
+- `RATE_LIMIT_MAX` - Maximum requests per time window (default: 100)
+- `GRAPHQL_PLAYGROUND` - Enable GraphQL playground (default: false)
+- `GRAPHQL_INTROSPECTION` - Enable GraphQL introspection (default: false)
+- `GRAPHQL_DEBUG` - Enable GraphQL debug mode (default: false)
+
+## Database Setup
+
+1. Create a MySQL database:
+```sql
+CREATE DATABASE nestjs_graphql_dev CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
+
+2. Update the database credentials in your `.env` file
+
+3. Run migrations (to be implemented in Task 3):
+```bash
+npm run migration:run
+```
+
+## Running the Application
+
+### Development
+```bash
+npm run start:dev
+```
+
+### Production
+```bash
+npm run build
+npm run start:prod
+```
+
+### Debug Mode
+```bash
+npm run start:debug
+```
+
+## Testing
 
 ```bash
-# development
-$ npm run start
+# Unit tests
+npm run test
 
-# watch mode
-$ npm run start:dev
+# E2E tests
+npm run test:e2e
 
-# production mode
-$ npm run start:prod
+# Test coverage
+npm run test:cov
 ```
 
-## Run tests
+## Code Quality
 
 ```bash
-# unit tests
-$ npm run test
+# Format code
+npm run format
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+# Lint code
+npm run lint
 ```
 
-## Deployment
+## GraphQL Playground
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+When running in development mode with `GRAPHQL_PLAYGROUND=true`, access the GraphQL playground at:
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+```
+http://localhost:3000/graphql
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## Project Structure
 
-## Resources
+```
+src/
+├── common/              # Shared utilities, decorators, guards, interceptors
+├── config/              # Configuration files
+├── database/            # Database migrations and seeds
+├── modules/             # Feature modules
+├── app.module.ts        # Root application module
+└── main.ts              # Application entry point
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+## TypeScript Path Aliases
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+The project uses TypeScript path aliases for cleaner imports:
 
-## Support
+- `@common/*` - Common utilities and shared code
+- `@config/*` - Configuration files
+- `@modules/*` - Feature modules
+- `@database/*` - Database-related files
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Example:
+```typescript
+import { CurrentUser } from '@common/decorators/current-user.decorator';
+import databaseConfig from '@config/database.config';
+```
 
-## Stay in touch
+## Architecture
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+This project follows a pragmatic resolver-service pattern:
+
+- **Simple CRUD operations**: Implemented directly in GraphQL resolvers
+- **Complex business logic**: Delegated to service layer
+- **Repositories**: Direct database access via TypeORM
+- **Guards**: Authentication and authorization
+- **Pipes**: Input validation and transformation
+- **Interceptors**: Logging, caching, response transformation
+
+## Security Features
+
+- Password hashing with bcrypt
+- JWT-based authentication
+- Role-based access control
+- Rate limiting
+- Helmet security headers
+- CORS configuration
+- Input validation
+- SQL injection prevention (via TypeORM)
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+MIT
